@@ -10,10 +10,10 @@
         <input class="toggle-all" id="toggle-all" type="checkbox" />
         <label for="toggle-all">Mark all as complete</label>
         <ul class="todo-list">
-          <li>
+          <li v-for="todo in todos" v-bind:key="todo.id">
             <div class="view">
               <input class="toggle" type="checkbox" />
-              <label>test</label>
+              <label>{{ todo.name }}</label>
               <button class="destroy"></button>
             </div>
             <input class="edit" value="test" />
@@ -52,23 +52,21 @@
 @import "../node_modules/todomvc-common/base.css";
 </style>
 
-<script>
+<script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { TodoPresenter, TodoDefaultPresenter, TodoRepository, TodoInMemoryRepository } from '@domisoft/todo-clean-architecture';
+import { of } from 'rxjs';
 
 @Component
 export default class App extends Vue {
-  todoApp = new TodoDefaultPresenter(
+  private todoApp: TodoPresenter = new TodoDefaultPresenter(
     new TodoInMemoryRepository([])
   );
 
-  mounted() {
-    this.todoApp.todos$.subscribe(todos => {
-      console.log('todos', todos);
-    });
-
-    this.todoApp.addTodo('foo');
-    this.todoApp.getAllTodos();
+  subscriptions() {
+    return {
+      todos: this.todoApp.todos$
+    }
   }
 }
 </script>
