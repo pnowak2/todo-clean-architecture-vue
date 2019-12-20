@@ -9,6 +9,8 @@
 </template>
 
 <style>
+@import '../node_modules/todomvc-app-css/index.css';
+@import '../node_modules/todomvc-common/base.css';
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
