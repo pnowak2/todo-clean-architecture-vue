@@ -58,16 +58,17 @@ import { TodoPresenter, TodoDefaultPresenter, TodoRepository, TodoInMemoryReposi
 
 @Component
 export default class App extends Vue {
-  mounted() {
-    const todoApp = new TodoDefaultPresenter(new TodoInMemoryRepository([]));
+  todoApp = new TodoDefaultPresenter(
+    new TodoInMemoryRepository([])
+  );
 
-    todoApp.todos$.subscribe(todos => {
+  mounted() {
+    this.todoApp.todos$.subscribe(todos => {
       console.log('todos', todos);
     });
 
-    todoApp.addTodo('foo');
-
-    todoApp.getAllTodos();
+    this.todoApp.addTodo('foo');
+    this.todoApp.getAllTodos();
   }
 }
 </script>
