@@ -1,6 +1,12 @@
 <template>
   <div>
     <section class="todoapp">
+      <todo-header @addItem="onAddItem($event)"></todo-header>
+      <todo-item></todo-item>
+      <todo-footer></todo-footer>
+    </section>
+
+    <!-- <section class="todoapp">
       <header class="header">
         <h1>todos</h1>
         <input class="new-todo" placeholder="What needs to be done?" autofocus />
@@ -37,7 +43,7 @@
           </li>
         </ul>
       </footer>
-    </section>
+    </section> -->
 
     <footer class="info">
       <p>Double-click to edit a todo</p>
@@ -54,19 +60,16 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { TodoPresenter, TodoDefaultPresenter, TodoRepository, TodoInMemoryRepository } from '@domisoft/todo-clean-architecture';
-import { of } from 'rxjs';
+import TodoHeader from './components/TodoHeader.vue';
+import TodoItem from './components/TodoItem.vue';
+import TodoFooter from './components/TodoFooter.vue';
 
-@Component
+@Component({
+  components: { TodoHeader, TodoItem, TodoFooter }
+})
 export default class App extends Vue {
-  private todoApp: TodoPresenter = new TodoDefaultPresenter(
-    new TodoInMemoryRepository([])
-  );
-
-  subscriptions() {
-    return {
-      todos: this.todoApp.todos$
-    }
+  onAddItem(name: string) {
+    console.log('add item', name);
   }
 }
 </script>
